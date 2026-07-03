@@ -3,6 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:readora/features/auth/presentation/cubit/user_cubit.dart';
 import 'package:readora/features/auth/presentation/cubit/user_state.dart';
 import 'package:readora/features/auth/presentation/pages/register_screen.dart';
+import 'package:readora/features/auth/presentation/pages/forget_password_screen.dart';
+import 'package:readora/features/home/presentation/pages/home_page.dart';
+
+import '../../../../core/utils/theme/theme_cubit.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -12,8 +16,13 @@ class LoginScreen extends StatelessWidget {
     return BlocConsumer<UserCubit, UserStates>(
       listener: (context, state) {
         if (state is AuthSuccess) {
+            Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => const HomeScreen()),
+  );
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Logged In Successfully')),
+            
           );
         }
         if (state is AuthError) {
@@ -25,7 +34,6 @@ class LoginScreen extends StatelessWidget {
       builder: (context, state) {
         final userCubit = UserCubit.get(context);
         return Scaffold(
-          backgroundColor: Colors.white,
           body: SingleChildScrollView(
             child: Column(
               children: [
@@ -56,6 +64,10 @@ class LoginScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: Column(
                     children: [
+//                         IconButton(onPressed: (){
+
+// context.read<ThemeCubit>().toggleTheme();
+//                 }, icon: Icon(Icons.light)),
                       const Text(
                         "Welcome Back!",
                         style: TextStyle(
@@ -74,6 +86,7 @@ class LoginScreen extends StatelessWidget {
                         controller: userCubit.emailController,
                         decoration: InputDecoration(
                           hintText: "Email address",
+                          hintStyle: TextStyle(color: Colors.black),
                           prefixIcon: const Icon(
                             Icons.email_outlined,
                             color: Color(0xFFB1732E),
@@ -114,7 +127,14 @@ class LoginScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ForgetPasswordScreen(),
+                              ),
+                            );
+                          },
                           child: const Text(
                             "Forgot password?",
                             style: TextStyle(

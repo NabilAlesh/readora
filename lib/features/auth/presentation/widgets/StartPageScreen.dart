@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
+import 'package:readora/core/constant/app_color.dart';
+import 'package:readora/core/utils/helper/cach_helper.dart';
 import 'package:readora/features/auth/presentation/pages/Login_Screen.dart';
-
 
 class Startpagescreen extends StatelessWidget {
   const Startpagescreen({super.key});
@@ -13,11 +13,10 @@ class Startpagescreen extends StatelessWidget {
         children: [
           Positioned.fill(
             child: Image.asset(
-              'images/gemini_image.jpg',
+              'assets/images/gemini_image.jpg',
               fit: BoxFit.cover,
             ),
           ),
-
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
@@ -33,14 +32,12 @@ class Startpagescreen extends StatelessWidget {
               ),
             ),
           ),
-
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-
                   const Text(
                     "Reading Is A Conversation\nAll Books Talk , But A Good Book Listens As Well",
                     textAlign: TextAlign.center,
@@ -51,27 +48,34 @@ class Startpagescreen extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-
                   const Spacer(),
-
                   SizedBox(
                     width: double.infinity,
                     height: 55,
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) =>  LoginScreen()),
-                        );
+                      onPressed: () async {
+                        await CacheHelper.saveData(key: 'isFirstTime', value: false);
+                        if (context.mounted) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (_) => const LoginScreen()),
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFB8793E),
+                        backgroundColor: AppColors.primaryColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      child: const Text("start reading"),
+                      child: const Text(
+                        "start reading",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
                 ],

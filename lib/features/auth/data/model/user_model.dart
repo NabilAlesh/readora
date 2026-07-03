@@ -16,8 +16,8 @@ class User {
   int? id;
   String? name;
   String? email;
-  Null? emailVerifiedAt;
-  Null? profilePhoto;
+  String? emailVerifiedAt;
+  String? profilePhoto;
   String? role;
   String? createdAt;
   String? updatedAt;

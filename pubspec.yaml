@@ -38,6 +38,8 @@ dependencies:
   pretty_dio_logger:
   shared_preferences:
   flutter_bloc: ^9.1.1
+  image_picker: ^1.2.1
+  flutter_screenutil: ^5.9.3
 
 
 
@@ -63,8 +65,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-  - assets/images/gemini_image1.jpg
-  - assets/images/gemini_image.jpg
+    - assets/images/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
