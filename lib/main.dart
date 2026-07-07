@@ -7,7 +7,9 @@ import 'package:readora/core/utils/theme/theme_cubit.dart';
 import 'package:readora/features/auth/presentation/cubit/user_cubit.dart';
 import 'package:readora/features/auth/presentation/pages/Login_Screen.dart';
 import 'package:readora/features/auth/presentation/widgets/StartPageScreen.dart';
-import 'package:readora/features/home/presentation/pages/home_page.dart';
+import 'package:readora/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:readora/features/my_library/presentation/cubit/my_library_cubit.dart';
+import 'package:readora/features/my_orders/presentation/cubit/orders_cubit.dart';
 import 'core/network/network_service.dart';
 import 'core/utils/theme/app_theme.dart';
 
@@ -32,16 +34,20 @@ void main() async {
 
   runApp(MyApp(startWidget: initialScreen));
 }
+
 class MyApp extends StatelessWidget {
   final Widget startWidget;
-  const MyApp({super.key,required this.startWidget});
+  const MyApp({super.key, required this.startWidget});
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => ThemeCubit()),
-        BlocProvider(create: (_) => UserCubit())
+        BlocProvider(create: (_) => UserCubit()),
+        BlocProvider(create: (_) => CartCubit()),
+        BlocProvider(create: (_) => OrdersCubit()),
+        BlocProvider(create: (_) => MyLibraryCubit()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
@@ -54,8 +60,8 @@ class MyApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 themeMode: themeMode,
                 theme: AppTheme.lightTheme,
-                darkTheme: AppTheme.darkTheme,              
-                supportedLocales: const [Locale('en'),],
+                darkTheme: AppTheme.darkTheme,
+                supportedLocales: const [Locale('en')],
                 home: startWidget,
               );
             },
@@ -65,4 +71,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

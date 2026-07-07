@@ -18,25 +18,29 @@ class RegisterScreen extends StatelessWidget {
       listener: (context, state) {
         if (state is VerifyEmailSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Account Created and Verified Successfully!")),
+            const SnackBar(
+              content: Text("Account Created and Verified Successfully!"),
+            ),
           );
-          Navigator.pop(context); 
+          Navigator.pop(context);
         } else if (state is AuthSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Account Created! Please verify your email.")),
+            const SnackBar(
+              content: Text("Account Created! Please verify your email."),
+            ),
           );
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const VerifyEmailScreen()),
           );
         } else if (state is AuthError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.error)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.error)));
         } else if (state is VerifyEmailError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.error)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.error)));
         }
       },
       builder: (context, state) {
@@ -56,7 +60,9 @@ class RegisterScreen extends StatelessWidget {
                           width: double.infinity,
                           decoration: const BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage("assets/images/gemini_image1.jpg"),
+                              image: AssetImage(
+                                "assets/images/gemini_image1.jpg",
+                              ),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -75,10 +81,12 @@ class RegisterScreen extends StatelessWidget {
                       child: GestureDetector(
                         onTap: () async {
                           final picker = ImagePicker();
-                          final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+                          final pickedFile = await picker.pickImage(
+                            source: ImageSource.gallery,
+                          );
                           if (pickedFile != null) {
                             userCubit.profileImage = io.File(pickedFile.path);
-                            (context as Element).markNeedsBuild(); 
+                            (context as Element).markNeedsBuild();
                           }
                         },
                         child: CircleAvatar(
@@ -87,12 +95,18 @@ class RegisterScreen extends StatelessWidget {
                           child: CircleAvatar(
                             radius: 41,
                             backgroundColor: const Color(0xFFF2F2F2),
-                            backgroundImage: userCubit.profileImage != null 
-                                ? FileImage(userCubit.profileImage!) 
-                                : null,
-                            child: userCubit.profileImage == null 
-                                ? const Icon(Icons.camera_alt_outlined, size: 28, color: AppColors.primaryColor)
-                                : null,
+                            backgroundImage:
+                                userCubit.profileImage != null
+                                    ? FileImage(userCubit.profileImage!)
+                                    : null,
+                            child:
+                                userCubit.profileImage == null
+                                    ? const Icon(
+                                      Icons.camera_alt_outlined,
+                                      size: 28,
+                                      color: AppColors.primaryColor,
+                                    )
+                                    : null,
                           ),
                         ),
                       ),
@@ -122,7 +136,10 @@ class RegisterScreen extends StatelessWidget {
                         controller: userCubit.nameController,
                         decoration: InputDecoration(
                           hintText: "Name",
-                          prefixIcon: const Icon(Icons.person_outline, color: AppColors.primaryColor),
+                          prefixIcon: const Icon(
+                            Icons.person_outline,
+                            color: AppColors.primaryColor,
+                          ),
                           filled: true,
                           fillColor: const Color(0xFFF2F2F2),
                           border: OutlineInputBorder(
@@ -137,7 +154,10 @@ class RegisterScreen extends StatelessWidget {
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           hintText: "Email address",
-                          prefixIcon: const Icon(Icons.email_outlined, color: AppColors.primaryColor),
+                          prefixIcon: const Icon(
+                            Icons.email_outlined,
+                            color: AppColors.primaryColor,
+                          ),
                           filled: true,
                           fillColor: const Color(0xFFF2F2F2),
                           border: OutlineInputBorder(
@@ -152,8 +172,14 @@ class RegisterScreen extends StatelessWidget {
                         obscureText: true,
                         decoration: InputDecoration(
                           hintText: "Password",
-                          prefixIcon: const Icon(Icons.lock_outline, color: AppColors.primaryColor),
-                          suffixIcon: const Icon(Icons.visibility_off, color: Color(0xFF999797)),
+                          prefixIcon: const Icon(
+                            Icons.lock_outline,
+                            color: AppColors.primaryColor,
+                          ),
+                          suffixIcon: const Icon(
+                            Icons.visibility_off,
+                            color: Color(0xFF999797),
+                          ),
                           filled: true,
                           fillColor: const Color(0xFFF2F2F2),
                           border: OutlineInputBorder(
@@ -168,8 +194,14 @@ class RegisterScreen extends StatelessWidget {
                         obscureText: true,
                         decoration: InputDecoration(
                           hintText: "Confirm Password",
-                          prefixIcon: const Icon(Icons.lock_outline, color: AppColors.primaryColor),
-                          suffixIcon: const Icon(Icons.visibility_off, color: Color(0xFF999797)),
+                          prefixIcon: const Icon(
+                            Icons.lock_outline,
+                            color: AppColors.primaryColor,
+                          ),
+                          suffixIcon: const Icon(
+                            Icons.visibility_off,
+                            color: Color(0xFF999797),
+                          ),
                           filled: true,
                           fillColor: const Color(0xFFF2F2F2),
                           border: OutlineInputBorder(
@@ -183,11 +215,12 @@ class RegisterScreen extends StatelessWidget {
                         width: double.infinity,
                         height: 52,
                         child: ElevatedButton(
-                          onPressed: state is AuthLoading
-                              ? null
-                              : () {
-                                  userCubit.userRegister();
-                                },
+                          onPressed:
+                              state is AuthLoading
+                                  ? null
+                                  : () {
+                                    userCubit.userRegister();
+                                  },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primaryColor,
                             shape: RoundedRectangleBorder(
@@ -195,23 +228,24 @@ class RegisterScreen extends StatelessWidget {
                             ),
                             elevation: 0,
                           ),
-                          child: state is AuthLoading
-                              ? const SizedBox(
-                                  width: 24,
-                                  height: 24,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 2,
+                          child:
+                              state is AuthLoading
+                                  ? const SizedBox(
+                                    width: 24,
+                                    height: 24,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                  : const Text(
+                                    "SIGN UP",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                )
-                              : const Text(
-                                  "SIGN UP",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
                         ),
                       ),
                       const SizedBox(height: 20),

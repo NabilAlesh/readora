@@ -4,9 +4,7 @@ import 'package:readora/features/auth/presentation/cubit/user_cubit.dart';
 import 'package:readora/features/auth/presentation/cubit/user_state.dart';
 import 'package:readora/features/auth/presentation/pages/register_screen.dart';
 import 'package:readora/features/auth/presentation/pages/forget_password_screen.dart';
-import 'package:readora/features/home/presentation/pages/home_page.dart';
-
-import '../../../../core/utils/theme/theme_cubit.dart';
+import 'package:readora/features/home/presentation/screens/home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -16,19 +14,18 @@ class LoginScreen extends StatelessWidget {
     return BlocConsumer<UserCubit, UserStates>(
       listener: (context, state) {
         if (state is AuthSuccess) {
-            Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(builder: (context) => const HomeScreen()),
-  );
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()),
+          );
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Logged In Successfully')),
-            
           );
         }
         if (state is AuthError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.error)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.error)));
         }
       },
       builder: (context, state) {
@@ -44,9 +41,7 @@ class LoginScreen extends StatelessWidget {
                       width: double.infinity,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(
-                            "assets/images/gemini_image1.jpg",
-                          ),
+                          image: AssetImage("assets/images/gemini_image1.jpg"),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -64,10 +59,10 @@ class LoginScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: Column(
                     children: [
-//                         IconButton(onPressed: (){
+                      //                         IconButton(onPressed: (){
 
-// context.read<ThemeCubit>().toggleTheme();
-//                 }, icon: Icon(Icons.light)),
+                      // context.read<ThemeCubit>().toggleTheme();
+                      //                 }, icon: Icon(Icons.light)),
                       const Text(
                         "Welcome Back!",
                         style: TextStyle(
@@ -131,7 +126,8 @@ class LoginScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const ForgetPasswordScreen(),
+                                builder:
+                                    (context) => const ForgetPasswordScreen(),
                               ),
                             );
                           },
@@ -149,11 +145,12 @@ class LoginScreen extends StatelessWidget {
                         width: double.infinity,
                         height: 55,
                         child: ElevatedButton(
-                          onPressed: state is AuthLoading
-                              ? null
-                              : () {
-                                  userCubit.userLogin();
-                                },
+                          onPressed:
+                              state is AuthLoading
+                                  ? null
+                                  : () {
+                                    userCubit.userLogin();
+                                  },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFFB1732E),
                             shape: RoundedRectangleBorder(
@@ -161,23 +158,24 @@ class LoginScreen extends StatelessWidget {
                             ),
                             elevation: 0,
                           ),
-                          child: state is AuthLoading
-                              ? const SizedBox(
-                                  width: 24,
-                                  height: 24,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 2,
+                          child:
+                              state is AuthLoading
+                                  ? const SizedBox(
+                                    width: 24,
+                                    height: 24,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                  : const Text(
+                                    "LOG IN",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                )
-                              : const Text(
-                                  "LOG IN",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
                         ),
                       ),
                       const SizedBox(height: 25),
